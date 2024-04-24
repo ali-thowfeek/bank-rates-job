@@ -5,6 +5,7 @@ import ballerinax/mysql;
 import ballerinax/mysql.driver as _;
 
 configurable string scraperApiUrl = ?;
+configurable string scraperApiKey = ?;
 configurable string dbName = ?;
 configurable string dbHost = ?;
 configurable int dbPort = ?;
@@ -49,7 +50,7 @@ public function main() returns error? {
         password = dbPass
     );
     io:println("mysqlClient initialized");
-    Metadata metadata = check scraperClient->/metadata;
+    Metadata metadata = check scraperClient->/metadata({"API-Key": scraperApiKey});
     io:println("metadata fetched: " + metadata.toJsonString());
     foreach Data bank in metadata.banks {
         foreach Data currency in metadata.currencies {
