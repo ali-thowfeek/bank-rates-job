@@ -56,7 +56,7 @@ public function main() returns error? {
         foreach Data currency in metadata.currencies {
             io:println("scraping for: " + bank.name + " " + currency.name);
 
-            RateResponse rateResponse = check scraperClient->/scrape(bank = bank.id, currency = currency.id, 'type = "ttr");
+            RateResponse rateResponse = check scraperClient->/scrape({"API-Key": scraperApiKey}, bank = bank.id, currency = currency.id, 'type = "ttr");
             io:println("rateResponse :" + rateResponse.toJsonString());
 
             sql:ParameterizedQuery bankQuery = `SELECT * FROM bank WHERE shortName = ${bank.id} LIMIT 1;`;
